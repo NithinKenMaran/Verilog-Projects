@@ -1,4 +1,3 @@
-atan_table.vh
 cordic_lookup.v
 cordic_stage.v
 cordic_top.v
