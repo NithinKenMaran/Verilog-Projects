@@ -1,3 +1,0 @@
-LDR r0 m0;
-LDR r1 m1;
-ADD r0 r1;

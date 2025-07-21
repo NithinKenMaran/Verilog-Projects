@@ -2,7 +2,7 @@ module program_counter(
     input clk, reset, jump, increment,
     input [3:0] address_input,
     output reg [3:0] current_address,
-    output reg pc_overflow;
+    output reg pc_overflow
 );
 
     always @ (posedge clk) begin

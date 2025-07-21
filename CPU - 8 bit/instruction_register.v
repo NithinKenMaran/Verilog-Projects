@@ -1,13 +1,15 @@
 module instruction_register(
     input clk, load_en, 
-    input [7:0] instruction_in,
-    output [3:0] opcode, operand
+    input [19:0] instruction_in, // opcode(4), operand1(8), operand2(8)
+
+    output [3:0] opcode, 
+    output [7:0] operand1, operand2
 );
 
-    reg [7:0] instruction;
+    reg [19:0] instruction;
     always @ (posedge clk) begin
         instruction <= load_en ? instruction_in : instruction;
     end
 
-    assign {opcode, operand} = instruction;
+    assign {opcode, operand1, operand2} = instruction;
 endmodule
