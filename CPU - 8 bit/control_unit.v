@@ -3,12 +3,14 @@ module control_unit(
     input clk, 
 
     output [2:0] cpu_state, 
-    output [63:0] reg_file_out
+    output [63:0] reg_file_out,
+    output [3:0] pc_debug
 );
 
 // EXPOSED OUTPUTS FOR DEBUGGING //
     assign cpu_state = state;
     assign reg_file_out = {r[7], r[6], r[5], r[4], r[3], r[2], r[1], r[0]};
+    assign pc_debug = pc_address_output;
 
 // INSTANTIATION //
 
@@ -93,8 +95,9 @@ module control_unit(
         case (state) 
             INIT: state <= (is_done == INIT) ? FETCH : INIT;
             FETCH: state <= (is_done == FETCH) ? DECODE : FETCH;
-            DECODE: state <= (is_done == DECODE) ? EXECUTE : DECODE;
-            EXECUTE: state <= (is_done == EXECUTE) ? FINISH : EXECUTE;
+            DECODE: state <= (is_done == FINISH) ? FINISH : 
+            (is_done == DECODE) ? EXECUTE : DECODE;
+            EXECUTE: state <= (is_done == EXECUTE) ? FETCH : EXECUTE;
             FINISH: state <= FINISH;
         endcase
     end
@@ -139,6 +142,8 @@ module control_unit(
                     INIT_SET_CLR: begin
                         mem_clr <= 1'b1;
                         pc_reset <= 1'b1;
+                        pc_jump <= 1'b0;
+                        pc_increment <= 1'b0;
                         init_phase <= INIT_RELEASE_CLR;
                         is_done <= INIT; 
                     end
@@ -168,6 +173,7 @@ module control_unit(
                     FETCH_DONE: begin 
                         // pc_increment changes to 1'b0, and state changes to DECODE
                         pc_increment <= 1'b0;
+                        fetch_phase <= FETCH_LOAD;
                     end
                 endcase
             end
@@ -185,7 +191,7 @@ module control_unit(
                             end
 
                             `STOP: begin
-                                is_done <= EXECUTE; // CPU will now go directly to FINISH stage
+                                is_done <= FINISH; // CPU will now go directly to FINISH stage
                             end
 
                             default: ; //ignore
