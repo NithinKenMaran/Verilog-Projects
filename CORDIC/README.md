@@ -30,6 +30,10 @@ endmodule
 ```
 
 # Output
+
+1/√2 = 0.707
+
+In Q1.6 format, 0.707 -> `0.707 * 64` = `45` -> `101101`
 ```
 cos: 00101101, sin: 00101101
 testbench.v:12: $finish called at 20 (1s)
