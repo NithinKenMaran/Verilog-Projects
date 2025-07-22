@@ -1,3 +1,8 @@
 # Introduction
 
 This repository documents the projects I've done over the course of my preparation for a hardware development summer intern, for 2026.
+
+# Project List
+
+- 8 Bit CPU
+- 6-stage, 8-bit CORDIC hardware implementation
