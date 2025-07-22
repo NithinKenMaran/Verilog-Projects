@@ -1,6 +1,6 @@
 # Overview
 
-This verilog project implements CORDIC with 8 stages, using 8 bit floating-point numbers, in Q1.6 format.
+This is my hardware implementation of CORDIC with 6 stages, using 8 bit floating-point numbers, in Q1.6 format.
 
 # Compiling
 
