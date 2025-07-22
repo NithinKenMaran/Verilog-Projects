@@ -1,6 +1,6 @@
 `include "opcodes.vh"
 
-// READ PROGRAM FROM BOTTOM -> TOP! (using little-endian format)
+// READ FROM BOTTOM -> TOP! 
 `define ROM { \
     {80{1'b0}}, \                             // fill remaining ROM with zeroes
     {`STOP, 8'b0, 8'b0}, \               //FINISH 
