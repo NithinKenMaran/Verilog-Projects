@@ -6,12 +6,13 @@ This is my hardware implementation of CORDIC with 6 stages, using 8 bit floating
 - Output: `sin` and `cos` of input angle, in `Q1.6` 8-bit floating-point format.
 
 >[!Note]
->Q1.6 floating-point format is made of 8 bits: 1 sign bit, 1 exponent bit, and 6 mantissa bits.
+>`Q1.6` floating-point format is made of 8 bits: 1 sign bit, 1 exponent bit, and 6 mantissa bits.
 
-# Compiling
+# Compile & Execute
 
 ```bash
-iverilog -o out -f files.txt
+iverilog -o out -f build/compile_list.txt
+vvp out
 ```
 
 # Testing
