@@ -17,7 +17,7 @@ vvp out
 
 # Programming
 
-I've defined a minimal ISA in `opcodes.vh`:
+I've defined a minimal ISA in `header/opcodes.vh`:
 
 ```verilog
 `define ADD 4'b0001
@@ -29,7 +29,7 @@ I've defined a minimal ISA in `opcodes.vh`:
 `define STOP 4'b1111
 ```
 
-Use this ISA to write a program in `program.vh`. An example program that loads and adds 2 numbers, is shown here:
+Use this ISA to write a program in `header/program.vh`. An example program that loads and adds 2 numbers, is shown here:
 
 ```verilog
 `include "opcodes.vh"
