@@ -6,7 +6,7 @@ This is an 8-bit CPU that I started building, to practice my coursework knowledg
 
 I've defined a minimal ISA in `opcodes.vh`:
 
-```
+```verilog
 `define ADD 4'b0001
 `define SUB 4'b0010
 `define AND 4'b0011
@@ -18,7 +18,7 @@ I've defined a minimal ISA in `opcodes.vh`:
 
 Use this ISA to write a program in `program.vh`. An example program that loads and adds 2 numbers, is shown here:
 
-```
+```verilog
 `include "opcodes.vh"
 
 // READ FROM BOTTOM -> TOP! 
