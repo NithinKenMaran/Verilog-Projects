@@ -1,68 +1,116 @@
-/*NOTES:
-all places: index 9: pipeline input, index 0: pipeline output.
-stage9: top stage (2^10 -> 2^9); stage0: bottom stage
-
-*/
 module findfirstset(
-    input clk, reset, valid_in,
+    input clk, reset, in_valid, 
     input [1023:0] in,
-    output reg [9:0] result
+
+    output [9:0] result, 
+    output out_valid
 );
 
-    wire [9:0] out; 
-    reg [9:0] validity_reg; reg validity_out;
+    // validity //
+    reg validity [1:10];
 
-    // i'll keep a width of 1024 for all stages, though the width reduces by a factor of 2 every stage.
-    reg [1023:0] inreg [9:0]; //9: pipeline input, 0: pipeline output.
+    // pipeline stages //
+    reg [511:0] stage1; reg [9:0] result_stage1;
+    reg [255:0] stage2; reg [9:0] result_stage2;
+    reg [127:0] stage3; reg [9:0] result_stage3;
+    reg [63:0] stage4; reg [9:0] result_stage4;
+    reg [31:0] stage5; reg [9:0] result_stage5;
+    reg [15:0] stage6; reg [9:0] result_stage6;
+    reg [7:0] stage7; reg [9:0] result_stage7;
+    reg [3:0] stage8; reg [9:0] result_stage8;
+    reg [1:0] stage9; reg [9:0] result_stage9;
+    reg stage10; reg [9:0] result_stage10;
 
-    // stages
-    genvar j;
-    always @ (posedge clk) begin //each pipeline stage gets a select half of the above stage. 
-    // selection depends on above stage output.
-        inreg[9] <= in;
-        generate 
-            for (j = 0; j < 9; j++) begin: pipeline_stages
-                // inreg[8] <= out[9] ? inreg[9][2^9 +: 2^9] : inreg[9][0 +: 2^9]
-                inreg[j] <= out[j+1] ? inreg[j+1][2 ** (j+1) +: 2 ** (j+1)] : inreg[j+1][0 +: 2 ** (j+1)];
-            end
-        endgenerate
-    end
-
-    // stage output
-    genvar i;
-    generate
-        for (i = 0; i < 10; i++) begin: out_connection
-            // out[9] = |inreg[9][2^9 +: 2^9]
-            assign out[i] = |inreg[i][2**i +: 2**i]; //starts at 2^i, for a width of 2^i.
+    // initialize //
+    initial begin
+        for (integer i = 1; i <= 10; i++) begin
+            validity[i] <= 1'b0;
         end
-    endgenerate
 
-
-    // out register
-    // output is the diagonal of this matrix.
-    reg [9:0] outreg_rows [9:0];
-    genvar k;
-    always @ (posedge clk) begin
-        generate
-            for (k = 0; k < 10; k++) begin: outreg_filling
-                outreg_rows[k] <= {out[k], outreg_rows[k][9:1]}; //shift out[k] (k'th stage output) in from the left.
-            end
-        endgenerate
+        stage1 <= {512{1'b0}}; result_stage1 <= {10{1'b0}};
+        stage2 <= {256{1'b0}}; result_stage2 <= {10{1'b0}};
+        stage3 <= {128{1'b0}}; result_stage3 <= {10{1'b0}};
+        stage4 <= {64{1'b0}}; result_stage4 <= {10{1'b0}};
+        stage5 <= {32{1'b0}}; result_stage5 <= {10{1'b0}};
+        stage6 <= {16{1'b0}}; result_stage6 <= {10{1'b0}};
+        stage7 <= {8{1'b0}}; result_stage7 <= {10{1'b0}};
+        stage8 <= {4{1'b0}}; result_stage8 <= {10{1'b0}};
+        stage9 <= {2{1'b0}}; result_stage9 <= {10{1'b0}};
+        stage10 <= 1'b0; result_stage10 <= {10{1'b0}};
     end
 
-    // validity_out contains whether the output at the current point is valid. 
+    // stage 1 //
     always @ (posedge clk) begin
-        {validity_reg, validity_out} <= {valid_in, validity_reg[9:0]};
+        validity[1] <= in_valid;
+        stage1 <= |in[511:0] ? in[511:0] : in[1023:512];
+        result_stage1 <= { {9{1'b0}} , ~|in[511:0] };
     end
 
-    // result update
-    wire [9:0] out_diag;
-    genvar m;
-    generate
-        for (m = 0; m < 10; m++) begin: diagonal
-            out_diag[k] = out
-        end
-    endgenerate
-    assign result = {10{validity_out}} & 
+    // stage 2 //
+    always @ (posedge clk) begin
+        validity[2] <= validity[1];
+        stage2 <= |stage1[255:0] ? stage1[255:0] : stage1[511:256];
+        result_stage2 <= { result_stage1[8:0] , ~|stage1[255:0] };
+    end
 
-endmodule  
+    // stage 3 //
+    always @ (posedge clk) begin
+        validity[3] <= validity[2];
+        stage3 <= |stage2[127:0] ? stage2[127:0] : stage2[255:128];
+        result_stage3 <= { result_stage2[8:0], ~|stage2[127:0] };
+    end
+
+    // stage 4 //
+    always @ (posedge clk) begin
+        validity[4] <= validity[3];
+        stage4 <= |stage3[63:0] ? stage3[63:0] : stage3[127:64];
+        result_stage4 <= { result_stage3[8:0], ~|stage3[63:0] };
+    end
+
+    // stage 5 //
+    always @ (posedge clk) begin
+        validity[5] <= validity[4];
+        stage5 <= |stage4[31:0] ? stage4[31:0] : stage4[63:32];
+        result_stage5 <= { result_stage4[8:0], ~|stage4[31:0] };
+    end
+
+    // stage 6 //
+    always @ (posedge clk) begin
+        validity[6] <= validity[5];
+        stage6 <= |stage5[15:0] ? stage5[15:0] : stage5[31:16];
+        result_stage6 <= { result_stage5[8:0], ~|stage5[15:0] };
+    end
+
+    // stage 7 //
+    always @ (posedge clk) begin
+        validity[7] <= validity[6];
+        stage7 <= |stage6[7:0] ? stage6[7:0] : stage6[15:8];
+        result_stage7 <= { result_stage6[8:0], ~|stage6[7:0] };
+    end
+    
+
+    // stage 8 //
+    always @ (posedge clk) begin
+        validity[8] <= validity[7];
+        stage8 <= |stage7[3:0] ? stage7[3:0] : stage7[7:4];
+        result_stage8 <= { result_stage7[8:0], ~|stage7[3:0] };
+    end
+
+    // stage 9 //
+    always @ (posedge clk) begin
+        validity[9] <= validity[8];
+        stage9 <= |stage8[1:0] ? stage8[1:0] : stage8[3:2];
+        result_stage9 <= { result_stage8[8:0], ~|stage8[1:0] };
+    end
+    
+    // stage 10 //
+    always @ (posedge clk) begin
+        validity[10] <= validity[9];
+        stage10 <= stage9[0] ? stage9[0] : stage9[1];
+        result_stage10 <= { result_stage9[8:0], ~stage9[0] };
+    end
+
+    assign out_valid = validity[10];
+    assign result = result_stage10;
+
+endmodule
