@@ -15,6 +15,8 @@ The pipeline contains 10 stages, modelling a binary-search. Pretty clearly, an N
 
 At each stage, the lower/upper half of the previous stage is chosen. The stage output represents the presence of a `1` at any place in the lower half of the stage.
 
+At the last stage, we'd be down to 1 bit, and the result pipeline would contain the position of the first `1`, starting from the LSB.
+
 # Testing
 
 I've presented an example `testbench.v` below, with a 1024-bit input:
