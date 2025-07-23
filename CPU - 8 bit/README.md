@@ -1,6 +1,13 @@
 # Intro
 
-This is an 8-bit CPU that I started building, to practice my coursework knowledge from Microprocessors and Digital Systems. 
+This is an 8-bit CPU that I built, to practice my coursework knowledge from Microprocessors and Digital Systems. 
+
+# Compile & Execute
+
+```bash
+iverilog -o out -f build/compile_list.txt
+vvp out
+```
 
 # Programming & Output
 
