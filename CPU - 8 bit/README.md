@@ -11,8 +11,8 @@ This is an 8-bit CPU that I built, to practice my coursework knowledge from Micr
 # Compile & Execute
 
 ```bash
-iverilog -o out -f build/compile_list.txt
-vvp out
+iverilog -o build/out -f build/compile_list.txt
+vvp build/out
 ```
 
 # Programming
