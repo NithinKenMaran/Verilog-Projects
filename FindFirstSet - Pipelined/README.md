@@ -7,6 +7,7 @@ I made this pipelined first-set finder, to practice my knowledge of pipelines. T
 This first-set finder takes an 1024-bit input, and returns the position of the first `1`, starting at the LSB. 
 
 The design is **fully pipelined**, meaning that inputs can be fed continuously, and results will be output with a latency of 10 clock cycles. 
+This also implies that with a full pipeline, the module **throughput is 1 output per clock cycle**.
 
 # Testing
 
