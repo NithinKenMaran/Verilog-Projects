@@ -2,8 +2,8 @@
 
 This is my hardware implementation of CORDIC with 6 stages, using 8 bit floating-point numbers, in Q1.6 format.
 
-Input: 8-bit angle, in radians, in Q1.6 8-bit floating-point format. 
-Output: `sin` and `cos` of input angle, in Q1.6 8-bit floating-point format.
+- Input: 8-bit angle, in radians, in Q1.6 8-bit floating-point format. 
+- Output: `sin` and `cos` of input angle, in Q1.6 8-bit floating-point format.
 
 >[!Note]
 >Q1.6 floating-point format is made of 8 bits: 1 sign bit, 1 exponent bit, and 6 mantissa bits.
