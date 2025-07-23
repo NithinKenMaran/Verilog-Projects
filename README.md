@@ -5,4 +5,5 @@ This repository documents the projects I've done over the course of my preparati
 # Project List
 
 - 8 Bit CPU
-- 6-stage, 8-bit CORDIC hardware implementation
+- 10-stage, 1024-bit **pipelined** First-Set-Bit finder
+- 6-stage, 8-bit **CORDIC** hardware implementation
