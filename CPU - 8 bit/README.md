@@ -4,7 +4,7 @@ This is an 8-bit CPU that I built, to practice my coursework knowledge from Micr
 
 - Each instruction is 20 bits long: 4-bit op-codes, and two 8-bit operands.
 - Instructions are stored in a 160-bit program memory, with a maximum of 8 instructions.
-- The CPU follows a simple state-machine, with the following sequence: FETCH -> DECODE -> EXECUTE, till a STOP command is received.
+- The CPU is a state-machine, alternating between `FETCH` -> `DECODE` -> `EXECUTE`, till a `STOP` command is received.
 - `control_unit.v` serves as the top-most module for this CPU. It exposes the internal 8-bit register file, and the program counter, for easy debugging.
 
 # Compile & Execute
