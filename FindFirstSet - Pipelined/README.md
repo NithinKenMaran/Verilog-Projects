@@ -9,6 +9,12 @@ This first-set finder takes an 1024-bit input, and returns the position of the f
 The design is **fully pipelined**, meaning that inputs can be fed continuously, and results will be output with a latency of 10 clock cycles. 
 This also implies that with a full pipeline, the module **throughput is 1 output per clock cycle**.
 
+# Pipeline Design Overview
+
+The pipeline contains 10 stages, modelling a binary-search. Pretty clearly, an N-bit input would require `log₂(N)` pipeline stages.
+
+At each stage, the lower/upper half of the previous stage is chosen. The stage output represents the presence of a `1` at any place in the lower half of the stage.
+
 # Testing
 
 I've presented an example `testbench.v` below, with a 1024-bit input:
