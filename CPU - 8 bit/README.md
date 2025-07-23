@@ -2,7 +2,7 @@
 
 This is an 8-bit CPU that I built, to practice my coursework knowledge from Microprocessors and Digital Systems.
 
-- Each instruction is 20 bits long: 4-bit op-codes, and two 8-bit operands.
+- Each instruction is 20 bits long: 4-bit op-code, and two 8-bit operands.
 - Instructions are stored in a 160-bit program memory, with a maximum of 8 instructions.
 - The CPU is a state-machine, alternating between `FETCH` -> `DECODE` -> `EXECUTE`, till a `STOP` command is received.
 - `control_unit.v` serves as the top-most module for this CPU.
