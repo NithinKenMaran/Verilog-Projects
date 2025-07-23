@@ -1,4 +1,4 @@
-# Intro
+# Overview
 
 This is an 8-bit CPU that I built, to practice my coursework knowledge from Microprocessors and Digital Systems.
 
