@@ -11,7 +11,7 @@ The design is fully pipelined, meaning that inputs can be fed continuously, and 
 
 I've presented an example `testbench.v` below, with a 1024-bit input:
 
-```
+```verilog
 `timescale 1ns/100ps
 module testbench;
     // clock //
