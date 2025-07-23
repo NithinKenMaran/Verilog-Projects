@@ -1,4 +1,4 @@
-`include "opcodes.vh"
+`include "header/opcodes.vh"
 module alu(
     input signed [7:0] operand_a, operand_b, 
     input [2:0] alu_op,
