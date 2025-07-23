@@ -1,7 +1,7 @@
 `include "header/opcodes.vh"
 module alu(
     input signed [7:0] operand_a, operand_b, 
-    input [2:0] alu_op,
+    input [3:0] alu_op,
     output reg signed [7:0] result,
     output reg cout, 
     output overflow

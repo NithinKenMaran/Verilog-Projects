@@ -40,7 +40,7 @@ module control_unit(
 
     // ALU //
     reg signed [7:0] alu_in_a, alu_in_b;
-    reg [2:0] alu_op;
+    reg [3:0] alu_op;
     wire [7:0] alu_result;
     wire alu_cout, alu_overflow;
 

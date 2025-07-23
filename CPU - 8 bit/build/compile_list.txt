@@ -1,5 +1,5 @@
-opcodes.vh
-program.vh
+header/opcodes.vh
+header/program.vh
 accumulator.v
 alu.v
 instruction_register.v
