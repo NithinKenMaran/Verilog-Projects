@@ -9,7 +9,7 @@ iverilog -o out -f build/compile_list.txt
 vvp out
 ```
 
-# Programming & Output
+# Programming
 
 I've defined a minimal ISA in `opcodes.vh`:
 
@@ -38,7 +38,9 @@ Use this ISA to write a program in `program.vh`. An example program that loads a
 }
 ```
 
-This, when tested with a simple testbench, gives the following output. Follow the changes in `r0` & `r1`, with the change in `pc` (Program Counter).
+# Output
+
+The above program, when tested with a simple testbench, gives the following output. Follow the changes in `r0` & `r1`, with the change in `pc` (Program Counter).
 
 ```
 Time: 0 | State: 0 | r0=x r1=x r2=x r3=x r4=x r5=x r6=x r7=x | pc = x
