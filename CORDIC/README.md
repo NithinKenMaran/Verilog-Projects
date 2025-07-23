@@ -12,7 +12,7 @@ iverilog -o out -f files.txt
 
 The module requires an input angle, in 8-bit Q1.6 format. The testbench here shows a sample 45-degree input angle.
 
-```
+```verilog
 module testbench;
     reg signed [7:0] angle_in;
     wire signed [7:0] cos_out, sin_out;
